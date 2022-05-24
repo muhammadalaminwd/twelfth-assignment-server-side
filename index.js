@@ -38,10 +38,3 @@ run().catch(console.dir);
 
 
 
-app.get('/', (req, res) => {
-  res.send('Assalamu Alaikum!')
-})
-
-app.listen(port, () => {
-  console.log(`Twelfth Assignment app listening on port ${port}`)
-})
