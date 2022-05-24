@@ -19,7 +19,6 @@ async function run(){
     try{
         await client.connect();
         const partsCollection = client.db('twelfth-assignment_portal').collection('parts');
-        const serviceCollection = client.db('twelfth-assignment_portal').collection('parts');
         app.get('/parts', async(req, res) => {
         const query = {};
         const cursor = partsCollection.find(query);
@@ -46,3 +45,6 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
   console.log(`Twelfth Assignment app listening on port ${port}`)
 })
+
+var jwt = require('jsonwebtoken');
+var token = jwt.sign({ foo: 'bar' }, 'shhhhh');
