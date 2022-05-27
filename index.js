@@ -9,6 +9,7 @@ const { query } = require("express");
 const res = require("express/lib/response");
 
 
+
 // middleware
 app.use(cors());
 app.use(express.json());
@@ -36,7 +37,11 @@ function verifyJWT(req, res, next) {
 async function run(){
     try{
         await client.connect();
-        const partsCollection = client.db('twelfth-assignment_portal').collection('parts');
+        const mongoData = client.db('twelfth-assignment_portal')
+        const partsCollection =  mongoData.collection('parts')
+        const userCollection = mongoData.collection('user')
+        const commentCollection = mongodb.collection("comments");
+        ;
 
         app.get('/parts', async(req, res) => {
         const query = {};
@@ -45,6 +50,15 @@ async function run(){
         res.send(parts);
         })
 
+        app.get("/comments", async (req, res) => {
+          const query = {};
+          const cursor = commentCollection.find(query);
+          const comments = await cursor.toArray();
+          res.json(comments);
+        });
+
+
+
         app.get('/parts/:id', async (req, res) => {
           const id = req.params.id;
           const query = { _id: ObjectId(id) };
@@ -52,6 +66,30 @@ async function run(){
           console.log(id, buy);
           res.send(buy);
         });
+
+        app.post("/comments", async (req, res) => {
+          const getComments = req.body;
+          const result = await commentCollection.insertOne(getComments);
+          res.json(result);
+        });
+
+
+        app.put('/user/:email', async (req, res) => {
+          const email = req.params.email;
+          const user = req.body;
+          const filter = { email: email };
+          const options = { upsert: true };
+          const updateDoc = {
+            $set: user,
+          };
+          const result = await userCollection.updateOne(filter, updateDoc, options);
+          res.send({ result});
+        });
+
+
+
+
+
   
     }
     finally{
