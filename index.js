@@ -43,7 +43,6 @@ async function run() {
     const partsCollection = mongoData.collection("parts");
     const userCollection = mongoData.collection("user");
     const adminCollection = mongoData.collection("admin");
-
     const commentCollection = mongoData.collection("comments");
 
     app.get("/parts", async (req, res) => {
