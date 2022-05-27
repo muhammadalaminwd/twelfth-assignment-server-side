@@ -42,7 +42,7 @@ async function run() {
     const mongoData = client.db("twelfth-assignment_portal");
     const partsCollection = mongoData.collection("parts");
     const userCollection = mongoData.collection("user");
-    const commentCollection = mongodb.collection("comments");
+    // const commentCollection = mongodb.collection("comments");
     app.get("/parts", async (req, res) => {
       const query = {};
       const cursor = partsCollection.find(query);
@@ -50,12 +50,12 @@ async function run() {
       res.send(parts);
     });
 
-    app.get("/comments", async (req, res) => {
-      const query = {};
-      const cursor = commentCollection.find(query);
-      const comments = await cursor.toArray();
-      res.json(comments);
-    });
+    // app.get("/comments", async (req, res) => {
+    //   const query = {};
+    //   const cursor = commentCollection.find(query);
+    //   const comments = await cursor.toArray();
+    //   res.json(comments);
+    // });
 
     app.get("/parts/:id", async (req, res) => {
       const id = req.params.id;
@@ -65,18 +65,18 @@ async function run() {
       res.send(buy);
     });
 
-    app.get("/user/:email", async (req, res) => {
-      const email = req.params.email;
-      const query = { email };
-      const user = await userCollection.findOne(query);
-      res.send(user);
-    });
+    // app.get("/user/:email", async (req, res) => {
+    //   const email = req.params.email;
+    //   const query = { email };
+    //   const user = await userCollection.findOne(query);
+    //   res.send(user);
+    // });
 
-    app.post("/comments", async (req, res) => {
-      const getComments = req.body;
-      const result = await commentCollection.insertOne(getComments);
-      res.json(result);
-    });
+    // app.post("/comments", async (req, res) => {
+    //   const getComments = req.body;
+    //   const result = await commentCollection.insertOne(getComments);
+    //   res.json(result);
+    // });
 
     app.put("/user/:email", async (req, res) => {
       const email = req.params.email;
