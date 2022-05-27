@@ -42,6 +42,7 @@ async function run() {
     const mongoData = client.db("twelfth-assignment_portal");
     const partsCollection = mongoData.collection("parts");
     const userCollection = mongoData.collection("user");
+    const adminCollection = mongoData.collection("admin");
 
     const commentCollection = mongoData.collection("comments");
 
@@ -90,6 +91,13 @@ async function run() {
       };
       const result = await userCollection.updateOne(filter, updateDoc, options);
       res.send({ result });
+
+      app.post("/admin", async (req, res) => {
+        const doc = req.body;
+        const result = await adminCollection.insertOne(doc);
+        res.json(result);
+      });
+
     });
   } finally {
   }
